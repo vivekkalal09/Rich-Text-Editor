@@ -42,7 +42,35 @@ const initializer = () => {
 };
 
 // main login
+const modifyText = (command, defaultUi, value) => {
+    // execCommand executes command on selected text
+    document.execCommand(command, defaultUi, value);
+};
 
+// For basic operations which don't need value parameter
+optionButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        modifyText(button.id, false, null);
+    });
+});
+
+advancedOptionButton.forEach((button) => {
+    button.addEventListener("change", () => {
+        modifyText(button.id, false, button.value);
+    });
+});
+
+
+linkButton.addEventListener("click", () => {
+    let userLink = prompt("Enter a URL");
+    // If link has http then pass directly else add https
+    if (/http/i.test(userLink)) {
+        modifyText(linkButton.id, false, userLink)
+    } else {
+        userLink = "http://" + userLink;
+        modifyText(linkButton.id, false, userLink)
+    }
+})
 // Hightlight clicked button
 const highlighter = (className, needsRemoval) => {
     className.forEach((button) => {
